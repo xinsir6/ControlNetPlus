@@ -36,7 +36,17 @@ pip install -r requirements.txt
 
 ## Single Condition
 ### Openpose
+![pose0](./images/000000_pose_concat.webp)
+![pose1](./images/000001_pose_concat.webp)
+![pose2](./images/000002_pose_concat.webp)
+![pose3](./images/000003_pose_concat.webp)
+![pose4](./images/000004_pose_concat.webp)
 ### Depth
+![depth0](./images/000005_depth_concat.webp)
+![depth1](./images/000006_depth_concat.webp)
+![depth2](./images/000007_depth_concat.webp)
+![depth3](./images/000008_depth_concat.webp)
+![depth4](./images/000009_depth_concat.webp)
 ### Canny
 ### Lineart
 ### AnimeLineart
