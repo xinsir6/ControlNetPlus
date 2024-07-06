@@ -11,7 +11,7 @@ We design a new architecture that can support 11 control types in condition text
 We collect a large amount of high quality images. The images are filtered and annotated seriously, the images covers a wide range of subjects, including photogragh, anime, nature, midjourney and so on.
 
 ## Network Arichitecture
-
+![images](./images/ControlNet++.png)
 
 
 We propose two new module in ControlNet++, named Condition Transformer and Control Encoder, repectively. We modified an old module slightly to enhance its representation ability. Besides, we propose an unified training strategy to realize single & multi control in one stage.
