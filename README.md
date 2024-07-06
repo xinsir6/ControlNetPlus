@@ -34,6 +34,10 @@ conda activate controlplus
 pip install -r requirements.txt
 ```
 ## Inference Scripts
+You should give a prompt and an control image, change the correspond lines in python file.
+```shell
+python controlnet_union_test_openpose.py
+```
 
 ## Single Condition
 ### Openpose
