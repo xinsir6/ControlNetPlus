@@ -1,7 +1,7 @@
 # ControlNetPlus
 ## ControlNet++: All-in-one ControlNet for image generations and editing!
 
-We design a new architecture that can support 11 control types in condition text-to-image generation and can generate high resolution images visually comparable with midjourney. The network is based on ControlNet proposed by lvmin Zhang, we propose two key modules to: 1 Extend the original ControlNet to support different image conditions using the same network parameter. 2 Support multiple conditions input, which is especially important for designers who want to edit image in detail, different conditions use the same condition encoder, without adding extra computations or parameters. We do thoroughly experiments on SDXL and achieve superior performance both in control ability and aesthetic score. We release the method and the model to the open source community to make everyone can enjoy it.
+We design a new architecture that can support 10+ control types in condition text-to-image generation and can generate high resolution images visually comparable with midjourney. The network is based on ControlNet proposed by lvmin Zhang, we propose two key modules to: 1 Extend the original ControlNet to support different image conditions using the same network parameter. 2 Support multiple conditions input, which is especially important for designers who want to edit image in detail, different conditions use the same condition encoder, without adding extra computations or parameters. We do thoroughly experiments on SDXL and achieve superior performance both in control ability and aesthetic score. We release the method and the model to the open source community to make everyone can enjoy it.
 
 ## News
 - [07/06/2024] Release `ControlNet++` and pretrained models.
