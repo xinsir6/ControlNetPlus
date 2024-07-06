@@ -48,14 +48,63 @@ pip install -r requirements.txt
 ![depth3](./images/000008_depth_concat.webp)
 ![depth4](./images/000009_depth_concat.webp)
 ### Canny
+![canny0](./images/000010_canny_concat.webp)
+![canny1](./images/000011_canny_concat.webp)
+![canny2](./images/000012_canny_concat.webp)
+![canny3](./images/000013_canny_concat.webp)
+![canny4](./images/000014_canny_concat.webp)
 ### Lineart
+![lineart0](./images/000015_lineart_concat.webp)
+![lineart1](./images/000016_lineart_concat.webp)
+![lineart2](./images/000017_lineart_concat.webp)
+![lineart3](./images/000018_lineart_concat.webp)
+![lineart4](./images/000019_lineart_concat.webp)
 ### AnimeLineart
+![animelineart0](./images/000020_anime_lineart_concat.webp)
+![animelineart1](./images/000021_anime_lineart_concat.webp)
+![animelineart2](./images/000022_anime_lineart_concat.webp)
+![animelineart3](./images/000023_anime_lineart_concat.webp)
+![animelineart4](./images/000024_anime_lineart_concat.webp)
 ### Mlsd
+![mlsd0](./images/000025_mlsd_concat.webp)
+![mlsd1](./images/000026_mlsd_concat.webp)
+![mlsd2](./images/000027_mlsd_concat.webp)
+![mlsd3](./images/000028_mlsd_concat.webp)
+![mlsd4](./images/000029_mlsd_concat.webp)
 ### Scribble
+![scribble0](./images/000030_scribble_concat.webp)
+![scribble1](./images/000031_scribble_concat.webp)
+![scribble2](./images/000032_scribble_concat.webp)
+![scribble3](./images/000033_scribble_concat.webp)
+![scribble4](./images/000034_scribble_concat.webp)
 ### Hed
+![hed0](./images/000035_hed_concat.webp)
+![hed1](./images/000036_hed_concat.webp)
+![hed2](./images/000037_hed_concat.webp)
+![hed3](./images/000038_hed_concat.webp)
+![hed4](./images/000039_hed_concat.webp)
 ### Pidi
+![pidi0](./images/000040_softedge_concat.webp)
+![pidi1](./images/000041_softedge_concat.webp)
+![pidi2](./images/000042_softedge_concat.webp)
+![pidi3](./images/000043_softedge_concat.webp)
+![pidi4](./images/000044_softedge_concat.webp)
 ### Teed
+![ted0](./images/000045_ted_concat.webp)
+![ted1](./images/000046_ted_concat.webp)
+![ted2](./images/000047_ted_concat.webp)
+![ted3](./images/000048_ted_concat.webp)
+![ted4](./images/000049_ted_concat.webp)
 ### Segment
+![segment0](./images/000050_seg_concat.webp)
+![segment1](./images/000051_seg_concat.webp)
+![segment2](./images/000052_seg_concat.webp)
+![segment3](./images/000053_seg_concat.webp)
+![segment4](./images/000054_seg_concat.webp)
 ### Normal
-
+![normal0](./images/000055_normal_concat.webp)
+![normal1](./images/000056_normal_concat.webp)
+![normal2](./images/000057_normal_concat.webp)
+![normal3](./images/000058_normal_concat.webp)
+![normal4](./images/000059_normal_concat.webp)
 
