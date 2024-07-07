@@ -17,9 +17,9 @@ If you find it useful, please give me a star, Thank you very much!!
 
 
 ## Our other popular released model 
-https://huggingface.co/xinsir/controlnet-openpose-sdxl-1.0
-https://huggingface.co/xinsir/controlnet-scribble-sdxl-1.0
-https://huggingface.co/xinsir/controlnet-tile-sdxl-1.0
+https://huggingface.co/xinsir/controlnet-openpose-sdxl-1.0  
+https://huggingface.co/xinsir/controlnet-scribble-sdxl-1.0  
+https://huggingface.co/xinsir/controlnet-tile-sdxl-1.0  
 https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 
 
