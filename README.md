@@ -7,6 +7,13 @@ We design a new architecture that can support 10+ control types in condition tex
 ## News
 - [07/06/2024] Release `ControlNet++` and pretrained models.
 - [07/06/2024] Release inference code(single condition & multi condition).
+
+
+## Todo:
+- [ ] ControlNet++ for gradio
+- [ ] ControlNet++ for Comfyui
+- [ ] release training code and training guidance.
+
   
 ## Dataset
 We collect a large amount of high quality images. The images are filtered and annotated seriously, the images covers a wide range of subjects, including photogragh, anime, nature, midjourney and so on.
