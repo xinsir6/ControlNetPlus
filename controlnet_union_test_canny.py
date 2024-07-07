@@ -5,11 +5,28 @@ import random
 import numpy as np
 from PIL import Image
 from diffusers import AutoencoderKL
-from controlnet_aux import OpenposeDetector
 from diffusers import EulerAncestralDiscreteScheduler
 from models.controlnet_union import ControlNetModel_Union
 from pipeline.pipeline_controlnet_union_sd_xl import StableDiffusionXLControlNetUnionPipeline
 
+
+def HWC3(x):
+    assert x.dtype == np.uint8
+    if x.ndim == 2:
+        x = x[:, :, None]
+    assert x.ndim == 3
+    H, W, C = x.shape
+    assert C == 1 or C == 3 or C == 4
+    if C == 3:
+        return x
+    if C == 1:
+        return np.concatenate([x, x, x], axis=2)
+    if C == 4:
+        color = x[:, :, 0:3].astype(np.float32)
+        alpha = x[:, :, 3:4].astype(np.float32) / 255.0
+        y = color * alpha + 255.0 * (1.0 - alpha)
+        y = y.clip(0, 255).astype(np.uint8)
+        return y
 
 
 device=torch.device('cuda:0')
@@ -30,22 +47,19 @@ pipe = StableDiffusionXLControlNetUnionPipeline.from_pretrained(
 
 pipe = pipe.to(device)
 
-processor = OpenposeDetector.from_pretrained('lllyasviel/ControlNet')
-
 
 prompt = "your prompt, the longer the better, you can describe it as detail as possible"
 negative_prompt = 'longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality'
 
 
 controlnet_img = cv2.imread("your image path")
-controlnet_img = processor(controlnet_img, hand_and_face=False, output_type='cv2')
-
-
-# need to resize the image resolution to 1024 * 1024 or same bucket resolution to get the best performance
 height, width, _  = controlnet_img.shape
 ratio = np.sqrt(1024. * 1024. / (width * height))
 new_width, new_height = int(width * ratio), int(height * ratio)
 controlnet_img = cv2.resize(controlnet_img, (new_width, new_height))
+
+controlnet_img = cv2.Canny(controlnet_img, 100, 200)
+controlnet_img = HWC3(controlnet_img)
 controlnet_img = Image.fromarray(controlnet_img)
 
 
@@ -60,14 +74,14 @@ generator = torch.Generator('cuda').manual_seed(seed)
 # 4 -- normal
 # 5 -- segment
 images = pipe(prompt=[prompt]*1,
-            image_list=[controlnet_img, 0, 0, 0, 0, 0], 
+            image_list=[0, 0, 0, controlnet_img, 0, 0], 
             negative_prompt=[negative_prompt]*1,
             generator=generator,
             width=width, 
             height=height,
             num_inference_steps=30,
             union_control=True,
-            union_control_type=torch.Tensor([1, 0, 0, 0, 0, 0]),
+            union_control_type=torch.Tensor([0, 0, 0, 1, 0, 0]),
             ).images
 
 images[0].save(f"your image save path, png format is usually better than jpg or webp in terms of image quality but got much bigger")

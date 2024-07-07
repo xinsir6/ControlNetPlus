@@ -5,11 +5,16 @@ import random
 import numpy as np
 from PIL import Image
 from diffusers import AutoencoderKL
-from controlnet_aux import OpenposeDetector
+from controlnet_aux import MidasDetector, ZoeDetector
 from diffusers import EulerAncestralDiscreteScheduler
 from models.controlnet_union import ControlNetModel_Union
 from pipeline.pipeline_controlnet_union_sd_xl import StableDiffusionXLControlNetUnionPipeline
 
+
+
+
+prompt = "your prompt, the longer the better, you can describe it as detail as possible"
+negative_prompt = 'longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality'
 
 
 device=torch.device('cuda:0')
@@ -30,7 +35,8 @@ pipe = StableDiffusionXLControlNetUnionPipeline.from_pretrained(
 
 pipe = pipe.to(device)
 
-processor = OpenposeDetector.from_pretrained('lllyasviel/ControlNet')
+processor_zoe = ZoeDetector.from_pretrained("lllyasviel/Annotators")
+processor_midas = MidasDetector.from_pretrained("lllyasviel/Annotators")
 
 
 prompt = "your prompt, the longer the better, you can describe it as detail as possible"
@@ -38,7 +44,11 @@ negative_prompt = 'longbody, lowres, bad anatomy, bad hands, missing fingers, ex
 
 
 controlnet_img = cv2.imread("your image path")
-controlnet_img = processor(controlnet_img, hand_and_face=False, output_type='cv2')
+
+if random.random() > 0.5:
+    controlnet_img = processor_zoe(controlnet_img, output_type='cv2')
+else:
+    controlnet_img = processor_midas(controlnet_img, output_type='cv2')
 
 
 # need to resize the image resolution to 1024 * 1024 or same bucket resolution to get the best performance
@@ -60,14 +70,14 @@ generator = torch.Generator('cuda').manual_seed(seed)
 # 4 -- normal
 # 5 -- segment
 images = pipe(prompt=[prompt]*1,
-            image_list=[controlnet_img, 0, 0, 0, 0, 0], 
+            image_list=[0, controlnet_img, 0, 0, 0, 0], 
             negative_prompt=[negative_prompt]*1,
             generator=generator,
             width=width, 
             height=height,
             num_inference_steps=30,
             union_control=True,
-            union_control_type=torch.Tensor([1, 0, 0, 0, 0, 0]),
+            union_control_type=torch.Tensor([0, 1, 0, 0, 0, 0]),
             ).images
 
 images[0].save(f"your image save path, png format is usually better than jpg or webp in terms of image quality but got much bigger")
