@@ -6,7 +6,7 @@ We design a new architecture that can support 10+ control types in condition tex
 
 **If you find it useful, please give me a star, Thank you very much!!**
   
-**500+ star, release the ProMax version with tile and inpainting!!!**
+**500+ star, release the ProMax version with tile and inpainting!!!**  
 **1000+ star, release the ControlNet++ model for SD3!!!**
 
 ## Advantages about the model
