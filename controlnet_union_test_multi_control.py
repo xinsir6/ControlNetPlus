@@ -74,11 +74,14 @@ images = pipe(prompt=[prompt]*1,
             image_list=[controlnet_img_pose, controlnet_img_depth, 0, 0, 0, 0], 
             negative_prompt=[negative_prompt]*1,
             generator=generator,
-            width=width, 
-            height=height,
+            width=new_width, 
+            height=new_height,
             num_inference_steps=30,
             union_control=True,
             union_control_type=torch.Tensor([1, 1, 0, 0, 0, 0]),
+            crops_coords_top_left=(0, 0),
+            target_size=(new_width, new_height),
+            original_size=(new_width * 2, new_height * 2),
             ).images
 
 images[0].save(f"your image save path, png format is usually better than jpg or webp in terms of image quality but got much bigger")
