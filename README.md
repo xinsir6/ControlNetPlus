@@ -16,7 +16,8 @@ We design a new architecture that can support 10+ control types in condition tex
 - Use many useful tricks during training. Including but not limited to date augmentation, mutiple loss, multi resolution
 - Use almost the same parameter compared with original ControlNet. No obvious increase in network parameter or computation.
 - Support 10+ control conditions, no obvious performance drop on any single condition compared with training independently
-- Support multi condition generation, condition fusion is learned during training. No need to set hyperparameter or desigh prompts.
+- Support multi condition generation, condition fusion is learned during training. No need to set hyperparameter or design prompts.
+- Compatible with other opensource SDXL models, such as BluePencilXL, CounterfeitXL. Compatible with other Lora models.
 
 
 ## Our other popular released model 
@@ -35,10 +36,12 @@ https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 - [ ] ControlNet++ for gradio
 - [ ] ControlNet++ for Comfyui
 - [ ] release training code and training guidance.
+- [ ] release arxiv paper.
 
 
 ## Visual Examples
 ### Openpose
+One of the most important controlnet models, we use many tricks in training this model, equally as good as https://huggingface.co/xinsir/controlnet-openpose-sdxl-1.0, SOTA performance in pose control.
 ![pose0](./images/000000_pose_concat.webp)
 ![pose1](./images/000001_pose_concat.webp)
 ![pose2](./images/000002_pose_concat.webp)
@@ -51,6 +54,7 @@ https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 ![depth3](./images/000008_depth_concat.webp)
 ![depth4](./images/000009_depth_concat.webp)
 ### Canny
+One of the most important controlnet models, canny is mixed training with lineart, anime lineart, mlsd. Robust performance in deal with any thin lines, the model is the key to decrease the deformity rate, use thin line to redraw the hand/foot is recommended.
 ![canny0](./images/000010_canny_concat.webp)
 ![canny1](./images/000011_canny_concat.webp)
 ![canny2](./images/000012_canny_concat.webp)
@@ -75,6 +79,7 @@ https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 ![mlsd3](./images/000028_mlsd_concat.webp)
 ![mlsd4](./images/000029_mlsd_concat.webp)
 ### Scribble
+One of the most important controlnet models, scribble model can support any line width and any line type. equally as good as https://huggingface.co/xinsir/controlnet-scribble-sdxl-1.0, make everyone a soul painter.
 ![scribble0](./images/000030_scribble_concat.webp)
 ![scribble1](./images/000031_scribble_concat.webp)
 ![scribble2](./images/000032_scribble_concat.webp)
@@ -113,6 +118,7 @@ https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 
 ## Multi Control Visual Examples
 ### Openpose + Canny
+Note: use pose skeleton to control the human pose, use thin line to draw the hand/foot detail to avoid deformity
 ![pose_canny0](./images/000007_openpose_canny_concat.webp)
 ![pose_canny1](./images/000008_openpose_canny_concat.webp)
 ![pose_canny2](./images/000009_openpose_canny_concat.webp)
@@ -121,6 +127,7 @@ https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 ![pose_canny5](./images/000012_openpose_canny_concat.webp)
 
 ### Openpose + Depth
+Note: depth image contains detail info, it's recommoned to use depth for background and use pose skeleton for foreground
 ![pose_depth0](./images/000013_openpose_depth_concat.webp)
 ![pose_depth1](./images/000014_openpose_depth_concat.webp)
 ![pose_depth2](./images/000015_openpose_depth_concat.webp)
@@ -129,6 +136,7 @@ https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 ![pose_depth5](./images/000018_openpose_depth_concat.webp)
 
 ### Openpose + Scribble
+Note: Scribble is a strong line model, if you want to draw something with not strict outline, you can use it. Openpose + Scribble gives you more freedom to generate your initial image, then you can use thin line to edit the detail.
 ![pose_scribble0](./images/000001_openpose_scribble_concat.webp)
 ![pose_scribble1](./images/000002_openpose_scribble_concat.webp)
 ![pose_scribble2](./images/000003_openpose_scribble_concat.webp)
@@ -267,8 +275,16 @@ def draw_bodypose(canvas: np.ndarray, keypoints: List[Keypoint]) -> np.ndarray:
 
     return canvas
 ```
-You should give a prompt and an control image, change the correspond lines in python file.
+For single condition inference, you should give a prompt and an control image, change the correspond lines in python file.
 ```shell
 python controlnet_union_test_openpose.py
 ```
+For multi condition inference, you should ensure your input image_list compatible with your control_type, for example, if you want 
+to use openpose and depth control, image_list --> [controlnet_img_pose, controlnet_img_depth, 0, 0, 0, 0], control_type --> [1, 1, 0, 0, 0, 0]. Refer to the controlnet_union_test_multi_control.py for more detail.  
+In theory, you don't need to set the condition scale for different conditions, the network is designed and trained to fuse different conditions naturally. Default setting is 1.0 for each condition input, and it is the same with multi condition training.
+However, if you want to increase the affect for some certain input condition, you can adjust the condition scales in Condition Transformer Module. In that module, the input conditions will be added to the source image features along with the bias prediction.
+multiply it with a certain scale will affect a lot(but may be cause some unknown result).
 
+```shell
+python controlnet_union_test_multi_control.py
+```

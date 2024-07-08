@@ -13,15 +13,15 @@ from pipeline.pipeline_controlnet_union_sd_xl import StableDiffusionXLControlNet
 
 device=torch.device('cuda:0')
 
-eulera_scheduler = EulerAncestralDiscreteScheduler.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", subfolder="scheduler")
+eulera_scheduler = EulerAncestralDiscreteScheduler.from_pretrained("gsdf/CounterfeitXL", subfolder="scheduler")
 
 # when test with other base model, you need to change the vae also.
-vae = AutoencoderKL.from_pretrained("madebyollin/sdxl-vae-fp16-fix", torch_dtype=torch.float16)
+vae = AutoencoderKL.from_pretrained("gsdf/CounterfeitXL", subfolder="vae", torch_dtype=torch.float16)
 
 controlnet_model = ControlNetModel_Union.from_pretrained("xinsir/controlnet-union-sdxl-1.0", torch_dtype=torch.float16, use_safetensors=True)
 
 pipe = StableDiffusionXLControlNetUnionPipeline.from_pretrained(
-    "stabilityai/stable-diffusion-xl-base-1.0", controlnet=controlnet_model, 
+    "gsdf/CounterfeitXL", controlnet=controlnet_model, 
     vae=vae,
     torch_dtype=torch.float16,
     scheduler=eulera_scheduler,
