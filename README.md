@@ -279,8 +279,7 @@ For single condition inference, you should give a prompt and an control image, c
 ```shell
 python controlnet_union_test_openpose.py
 ```
-For multi condition inference, you should ensure your input image_list compatible with your control_type, for example, if you want 
-to use openpose and depth control, image_list --> [controlnet_img_pose, controlnet_img_depth, 0, 0, 0, 0], control_type --> [1, 1, 0, 0, 0, 0]. Refer to the controlnet_union_test_multi_control.py for more detail.  
+For multi condition inference, you should ensure your input image_list compatible with your control_type, for example, if you want to use openpose and depth control, image_list --> [controlnet_img_pose, controlnet_img_depth, 0, 0, 0, 0], control_type --> [1, 1, 0, 0, 0, 0]. Refer to the controlnet_union_test_multi_control.py for more detail.  
 In theory, you don't need to set the condition scale for different conditions, the network is designed and trained to fuse different conditions naturally. Default setting is 1.0 for each condition input, and it is the same with multi condition training.
 However, if you want to increase the affect for some certain input condition, you can adjust the condition scales in Condition Transformer Module. In that module, the input conditions will be added to the source image features along with the bias prediction.
 multiply it with a certain scale will affect a lot(but may be cause some unknown result).
