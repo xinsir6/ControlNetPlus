@@ -27,7 +27,8 @@ from diffusers.utils.import_utils import is_invisible_watermark_available
 
 from diffusers.image_processor import PipelineImageInput, VaeImageProcessor
 from diffusers.loaders import FromSingleFileMixin, LoraLoaderMixin, TextualInversionLoaderMixin
-from diffusers.models import AutoencoderKL, ControlNetModel, ControlNetModel_Union, UNet2DConditionModel
+from diffusers.models import AutoencoderKL, ControlNetModel, UNet2DConditionModel
+from ..models.controlnet_union import ControlNetModel_Union
 from diffusers.models.attention_processor import (
     AttnProcessor2_0,
     LoRAAttnProcessor2_0,
