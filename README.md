@@ -196,6 +196,10 @@ conda create -n controlplus python=3.8
 conda activate controlplus
 pip install -r requirements.txt
 ```
+
+## Download Weight
+You download the model weight in https://huggingface.co/xinsir/controlnet-union-sdxl-1.0. Any new model release will be put on the huggingface, you can follow https://huggingface.co/xinsir to get the newest model info.
+
 ## Inference Scripts
 We provide a inference scripts for each control condition. Please refer to it for more detail.
 
