@@ -42,6 +42,7 @@ https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 ## Visual Examples
 ### Openpose
 One of the most important controlnet models, we use many tricks in training this model, equally as good as https://huggingface.co/xinsir/controlnet-openpose-sdxl-1.0, SOTA performance in pose control.
+To make the openpose model reach its best performance, you should replace the draw_pose function in controlnet_aux package(comfyui has its own controlnet_aux package), refer to the **Inference Scripts** for detail.
 ![pose0](./images/000000_pose_concat.webp)
 ![pose1](./images/000001_pose_concat.webp)
 ![pose2](./images/000002_pose_concat.webp)
