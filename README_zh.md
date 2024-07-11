@@ -52,7 +52,7 @@ https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 ![depth3](./images/000008_depth_concat.webp)
 ![depth4](./images/000009_depth_concat.webp)
 ### Canny
-One of the most important controlnet models, canny is mixed training with lineart, anime lineart, mlsd. Robust performance in deal with any thin lines, the model is the key to decrease the deformity rate, use thin line to redraw the hand/foot is recommended.
+这是最重要的ControlNet模型之一，canny模型与lineart、anime lineart、mlsd混合训练。在处理任何细线时具有稳健的性能，该模型是降低畸形率的关键，建议使用细线重新绘制手/脚。
 ![canny0](./images/000010_canny_concat.webp)
 ![canny1](./images/000011_canny_concat.webp)
 ![canny2](./images/000012_canny_concat.webp)
@@ -194,7 +194,7 @@ pip install -r requirements.txt
 ```
 
 ## 下载权重
-你可以在https://huggingface.co/xinsir/controlnet-union-sdxl-1.0下载模型权重。任何新模型的发布都会放在huggingface上，你可以关注https://huggingface.co/xinsir以获取最新的模型信息。
+你可以在 https://huggingface.co/xinsir/controlnet-union-sdxl-1.0 下载模型权重。任何新模型的发布都会放在huggingface上，你可以关注 https://huggingface.co/xinsir 以获取最新的模型信息。
 
 ## 推理脚本
 我们为每个控制条件提供了一个推理脚本。请参考它获取更多细节。
