@@ -38,7 +38,7 @@ https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 
 ## 视觉示例
 ### Openpose
-这是最重要的ControlNet模型之一，我们在训练此模型时使用了许多技巧，与https://huggingface.co/xinsir/controlnet-openpose-sdxl-1.0的性能相当，是姿态控制的最新技术。
+这是最重要的ControlNet模型之一，我们在训练此模型时使用了许多技巧，与 https://huggingface.co/xinsir/controlnet-openpose-sdxl-1.0 的性能相当，是姿态控制的最新技术。
 为了使Openpose模型达到最佳性能，你应该替换controlnet_aux包中的draw_pose函数（Comfyui有其自己的controlnet_aux包），详细信息请参阅**推理脚本**。
 ![pose0](./images/000000_pose_concat.webp)
 ![pose1](./images/000001_pose_concat.webp)
@@ -77,7 +77,7 @@ https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 ![mlsd3](./images/000028_mlsd_concat.webp)
 ![mlsd4](./images/000029_mlsd_concat.webp)
 ### Scribble
-这是最重要的ControlNet模型之一，涂鸦模型可以支持任何线宽和任何线型。其性能与https://huggingface.co/xinsir/controlnet-scribble-sdxl-1.0相当，让每个人都能成为灵魂画师。
+这是最重要的ControlNet模型之一，涂鸦模型可以支持任何线宽和任何线型。其性能与 https://huggingface.co/xinsir/controlnet-scribble-sdxl-1.0 相当，让每个人都能成为灵魂画师。
 ![scribble0](./images/000030_scribble_concat.webp)
 ![scribble1](./images/000031_scribble_concat.webp)
 ![scribble2](./images/000032_scribble_concat.webp)
@@ -194,7 +194,7 @@ pip install -r requirements.txt
 ```
 
 ## 下载权重
-你可以在 https://huggingface.co/xinsir/controlnet-union-sdxl-1.0 下载模型权重。任何新模型的发布都会放在huggingface上，你可以关注 https://huggingface.co/xinsir 以获取最新的模型信息。
+你可以在 /xinsir/controlnet-union-sdxl-1.0 下载模型权重。任何新模型的发布都会放在huggingface上，你可以关注 /xinsir 以获取最新的模型信息。
 
 ## 推理脚本
 我们为每个控制条件提供了一个推理脚本。请参考它获取更多细节。
