@@ -1,4 +1,7 @@
 # ControlNetPlus
+
+## English | [简体中文](./README_zh.md)
+
 ## ControlNet++: All-in-one ControlNet for image generations and editing!
 ![images_display](./images/masonry.webp)
 
