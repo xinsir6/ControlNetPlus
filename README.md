@@ -9,8 +9,12 @@
 
 **If you find it useful, please give me a star, Thank you very much!!**
   
-**500+ star, release the ProMax version with tile and inpainting!!!**  
-**1000+ star, release the ControlNet++ model for SD3!!!**
+**~500+ star, release the ProMax version with tile and inpainting!!!~**  
+**SDXL ProMax version has been released!!!，Enjoy it!!!**  
+**1000+ star, release the ControlNet++ model for SD3!!!**  
+**3000+ star, release the ControlNet++ ProMax model for SD3!!!**
+
+Note: we put the promax model with a promax suffix in the same [huggingface model repo](https://huggingface.co/xinsir/controlnet-union-sdxl-1.0), detailed instructions will be added later. 
 
 ## Advantages about the model
 - Use bucket training like novelai, can generate high resolutions images of any aspect ratio
