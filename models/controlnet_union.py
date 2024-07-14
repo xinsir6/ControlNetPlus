@@ -256,6 +256,7 @@ class ControlNetModel_Union(ModelMixin, ConfigMixin, FromOriginalControlNetMixin
         conditioning_embedding_out_channels: Optional[Tuple[int]] = (16, 32, 96, 256),
         global_pool_conditions: bool = False,
         addition_embed_type_num_heads=64,
+        num_control_type = 6,
     ):
         super().__init__()
 
@@ -389,7 +390,7 @@ class ControlNetModel_Union(ModelMixin, ConfigMixin, FromOriginalControlNetMixin
         # Condition Transformer(fuse single/multi conditions with input image) 
         # The Condition Transformer augment the feature representation of conditions
         # The overall design is somewhat like resnet. The output of Condition Transformer is used to predict a condition bias adding to the original condition feature.
-        num_control_type = 6
+        # num_control_type = 6
         num_trans_channel = 320
         num_trans_head = 8
         num_trans_layer = 1
