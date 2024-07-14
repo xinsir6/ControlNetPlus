@@ -1,13 +1,14 @@
 # diffusers测试ControlNet
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+import sys
+sys.path.append('..')
 import cv2
 import time
 import torch
 import random
 import numpy as np
 from PIL import Image
-from annotator.util import nms, HWC3
 from diffusers.utils import load_image
 from diffusers import DDIMScheduler, EulerAncestralDiscreteScheduler, AutoencoderKL
 from models.controlnet_union import ControlNetModel_Union
