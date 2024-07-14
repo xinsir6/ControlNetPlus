@@ -15,6 +15,49 @@
 **3000+ star, release the ControlNet++ ProMax model for SD3!!!**
 
 Note: we put the promax model with a promax suffix in the same [huggingface model repo](https://huggingface.co/xinsir/controlnet-union-sdxl-1.0), detailed instructions will be added later. 
+## Advanced editing features in Promax Model
+### Tile Deblur
+![blur0](./images/100000_tile_blur_concat.webp)
+![blur1](./images/100001_tile_blur_concat.webp)
+![blur2](./images/100002_tile_blur_concat.webp)
+![blur3](./images/100003_tile_blur_concat.webp)
+![blur4](./images/100004_tile_blur_concat.webp)
+![blur5](./images/100005_tile_blur_concat.webp)
+### Tile variation
+![var0](./images/100006_tile_var_concat.webp)
+![var1](./images/100007_tile_var_concat.webp)
+![var2](./images/100008_tile_var_concat.webp)
+![var3](./images/100009_tile_var_concat.webp)
+![var4](./images/100010_tile_var_concat.webp)
+![var5](./images/100011_tile_var_concat.webp)
+
+### Tile Super Resolution
+Following example show from 1M resolution --> 9M resolution
+<div style="display: flex; justify-content: space-between;">
+  <img src="./images/tile_super1.webp" alt="Image 1" style="width: 49%; margin: 1%;">
+  <img src="./images/tile_super1_9upscale.webp" alt="Image 2" style="width: 49%; margin: 1%;">
+</div>
+
+<div style="display: flex; justify-content: space-between;">
+  <img src="./images/tile_super2.webp" alt="Image 1" style="width: 49%; margin: 1%;">
+  <img src="./images/tile_super2_9upscale.webp" alt="Image 2" style="width: 49%; margin: 1%;">
+</div>
+
+### Image Inpainting
+![inp0](./images/100018_inpainting_concat.webp)
+![inp1](./images/100019_inpainting_concat.webp)
+![inp2](./images/100020_inpainting_concat.webp)
+![inp3](./images/100021_inpainting_concat.webp)
+![inp4](./images/100022_inpainting_concat.webp)
+![inp5](./images/100023_inpainting_concat.webp)
+
+### Image Outpainting
+![oup0](./images/100012_outpainting_concat.webp)
+![oup1](./images/100013_outpainting_concat.webp)
+![oup2](./images/100014_outpainting_concat.webp)
+![oup3](./images/100015_outpainting_concat.webp)
+![oup4](./images/100016_outpainting_concat.webp)
+![oup5](./images/100017_outpainting_concat.webp)
 
 ## Advantages about the model
 - Use bucket training like novelai, can generate high resolutions images of any aspect ratio
