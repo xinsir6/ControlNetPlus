@@ -15,6 +15,10 @@
 **3000+ star, release the ControlNet++ ProMax model for SD3!!!**
 
 Note: we put the promax model with a promax suffix in the same [huggingface model repo](https://huggingface.co/xinsir/controlnet-union-sdxl-1.0), detailed instructions will be added later. 
+
+## Help needed
+First, I want to thank everyone who pay attention to this project and give support to me. ControlNet++ has gained 600+ star in github and 15000+ downloads in huggingface within a week, I never thought about it before I release it. I have received many feedbacks from you guys. But I am faced with the situation that my energy is limited, the main problem you faced lies in the adaptation of the model to comfyui, A1111 ControlNet extension, diffusers, because this a new network architecture and can't be directly used in the original framework, there is work to do. Recently My main effort lies in the training of the model, you know it is not easy to provide the coolest model with good performance. Especially for SD3, the model has been reported to have the problem of human deformities, I must work hard to solve it. So I need help, anyone who can help with the adaptation to comfyui, A1111 ControlNet extension, diffusers, please concat me, you can just open an issue or discussion.
+
 ## Advanced editing features in Promax Model
 ### Tile Deblur
 ![blur0](./images/100000_tile_blur_concat.webp)
@@ -80,6 +84,7 @@ https://huggingface.co/xinsir/controlnet-canny-sdxl-1.0
 ## News
 - [07/06/2024] Release `ControlNet++` and pretrained models.
 - [07/06/2024] Release inference code(single condition & multi condition).
+- [07/13/2024] Release `ProMax ControlNet++` with advanced editing function.
 
 
 ## Todo:
