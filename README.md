@@ -11,7 +11,8 @@
   
 **~500+ star, release the ProMax version with tile and inpainting!!!~**  
 **SDXL ProMax version has been released!!!，Enjoy it!!!**  
-**1000+ star, release the ControlNet++ model for SD3!!!**  
+**~1000+ star, release the ControlNet++ model for SD3!!!~**  
+**SD3 training is doing, will release as soon as complete!!**  
 **3000+ star, release the ControlNet++ ProMax model for SD3!!!**
 
 Note: we put the promax model with a promax suffix in the same [huggingface model repo](https://huggingface.co/xinsir/controlnet-union-sdxl-1.0), detailed instructions will be added later. 
