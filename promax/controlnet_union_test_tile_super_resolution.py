@@ -20,7 +20,10 @@ device=torch.device('cuda:0')
 eulera_scheduler = EulerAncestralDiscreteScheduler.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", subfolder="scheduler")
 vae = AutoencoderKL.from_pretrained("madebyollin/sdxl-vae-fp16-fix", torch_dtype=torch.float16)
 # Note you should set the model and the config to the promax version manually, default is not the promax version. 
-controlnet_model = ControlNetModel_Union.from_pretrained("xinsir/controlnet-union-sdxl-1.0", torch_dtype=torch.float16, use_safetensors=True)
+from huggingface_hub import snapshot_download
+snapshot_download(repo_id="xinsir/controlnet-union-sdxl-1.0", local_dir='controlnet-union-sdxl-1.0')
+# you should make a new dir controlnet-union-sdxl-1.0-promax and mv the promax config and promax model into it and rename the promax config and the promax model.
+controlnet_model = ControlNetModel_Union.from_pretrained("./controlnet-union-sdxl-1.0-promax", torch_dtype=torch.float16, use_safetensors=True)
 
 
 pipe = StableDiffusionXLControlNetUnionImg2ImgPipeline.from_pretrained(

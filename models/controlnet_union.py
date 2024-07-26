@@ -406,7 +406,7 @@ class ControlNetModel_Union(ModelMixin, ConfigMixin, FromOriginalControlNetMixin
         # Control Encoder to distinguish different control conditions
         # A simple but effective module, consists of an embedding layer and a linear layer, to inject the control info to time embedding.
         self.control_type_proj = Timesteps(addition_time_embed_dim, flip_sin_to_cos, freq_shift)
-        self.control_add_embedding = TimestepEmbedding(addition_time_embed_dim * 6, time_embed_dim)
+        self.control_add_embedding = TimestepEmbedding(addition_time_embed_dim * num_control_type, time_embed_dim)
         #-----------------------------------------------------------------------------------------------------
 
         self.down_blocks = nn.ModuleList([])
