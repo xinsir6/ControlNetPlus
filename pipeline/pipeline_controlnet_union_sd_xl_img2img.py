@@ -36,7 +36,7 @@ from diffusers.loaders import (
     StableDiffusionXLLoraLoaderMixin,
     TextualInversionLoaderMixin,
 )
-from diffusers import AutoencoderKL, ImageProjection, UNet2DConditionModel
+from diffusers import AutoencoderKL, UNet2DConditionModel
 from models.controlnet_union import ControlNetModel_Union
 from diffusers.models.attention_processor import (
     AttnProcessor2_0,
@@ -44,6 +44,7 @@ from diffusers.models.attention_processor import (
     LoRAXFormersAttnProcessor,
     XFormersAttnProcessor,
 )
+from diffusers.models.embeddings import ImageProjection
 from diffusers.models.lora import adjust_lora_scale_text_encoder
 from diffusers.schedulers import KarrasDiffusionSchedulers
 from diffusers.utils import (
@@ -54,6 +55,7 @@ from diffusers.utils import (
     scale_lora_layers,
     unscale_lora_layers,
 )
+from diffusers import ControlNetModel
 from diffusers.utils.torch_utils import is_compiled_module, randn_tensor
 from diffusers.pipelines.pipeline_utils import DiffusionPipeline, StableDiffusionMixin
 from diffusers.pipelines.stable_diffusion_xl.pipeline_output import StableDiffusionXLPipelineOutput
