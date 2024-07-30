@@ -8,12 +8,8 @@
 ***We design a new architecture that can support 10+ control types in condition text-to-image generation and can generate high resolution images visually comparable with midjourney***. The network is based on the original ControlNet architecture, we propose two new modules to: 1 Extend the original ControlNet to support different image conditions using the same network parameter. 2 Support multiple conditions input without increasing computation offload, which is especially important for designers who want to edit image in detail, different conditions use the same condition encoder, without adding extra computations or parameters. We do thoroughly experiments on SDXL and achieve superior performance both in control ability and aesthetic score. We release the method and the model to the open source community to make everyone can enjoy it.  
 
 **If you find it useful, please give me a star, Thank you very much!!**
-  
-**~500+ star, release the ProMax version with tile and inpainting!!!~**  
 **SDXL ProMax version has been released!!!，Enjoy it!!!**  
-**~1000+ star, release the ControlNet++ model for SD3!!!~**  
-**~SD3 training is doing, will release as soon as complete!!~**  
-**~3000+ star, release the ControlNet++ ProMax model for SD3!!!~**  
+
 **I am sorry that because of the project's revenue and expenditure are difficult to balance, the GPU resources are assigned to other projects that are more likely to be profitable, the SD3 trainging is stopped until I find enough GPU supprt, I will try my best to find GPUs to continue training. If this brings you inconvenience, I sincerely apologize for that. I want to thank everyone who likes this project, your support is what keeps me going**
 
 Note: we put the promax model with a promax suffix in the same [huggingface model repo](https://huggingface.co/xinsir/controlnet-union-sdxl-1.0), detailed instructions will be added later. 
