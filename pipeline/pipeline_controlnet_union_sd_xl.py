@@ -27,7 +27,8 @@ from diffusers.utils.import_utils import is_invisible_watermark_available
 
 from diffusers.image_processor import PipelineImageInput, VaeImageProcessor
 from diffusers.loaders import FromSingleFileMixin, LoraLoaderMixin, TextualInversionLoaderMixin
-from diffusers.models import AutoencoderKL, ControlNetModel, UNet2DConditionModel
+from diffusers.models import AutoencoderKL, ControlNetModel
+from diffusers.models.unets.unet_2d_condition import UNet2DConditionModel
 from models.controlnet_union import ControlNetModel_Union
 from diffusers.models.attention_processor import (
     AttnProcessor2_0,
@@ -747,6 +748,7 @@ class StableDiffusionXLControlNetUnionPipeline(
     @replace_example_docstring(EXAMPLE_DOC_STRING)
     def __call__(
         self,
+        union_control_type: torch.Tensor,
         prompt: Union[str, List[str]] = None,
         prompt_2: Optional[Union[str, List[str]]] = None,
         image_list: PipelineImageInput = None,
@@ -779,8 +781,8 @@ class StableDiffusionXLControlNetUnionPipeline(
         negative_original_size: Optional[Tuple[int, int]] = None,
         negative_crops_coords_top_left: Tuple[int, int] = (0, 0),
         negative_target_size: Optional[Tuple[int, int]] = None,
-        union_control = False,
-        union_control_type = None,
+        denoising_end: Optional[float] = None,
+        **kwargs
     ):
         r"""
         The call function to the pipeline for generation.
@@ -1003,6 +1005,7 @@ class StableDiffusionXLControlNetUnionPipeline(
 
 
         # 5. Prepare timesteps
+
         self.scheduler.set_timesteps(num_inference_steps, device=device)
         timesteps = self.scheduler.timesteps
 
@@ -1062,6 +1065,22 @@ class StableDiffusionXLControlNetUnionPipeline(
         prompt_embeds = prompt_embeds.to(device)
         add_text_embeds = add_text_embeds.to(device)
         add_time_ids = add_time_ids.to(device).repeat(batch_size * num_images_per_prompt, 1)
+
+        # 8.1 Apply denoising_end
+        if (
+            denoising_end is not None
+            and isinstance(denoising_end, float)
+            and denoising_end > 0
+            and denoising_end < 1
+        ):
+            discrete_timestep_cutoff = int(
+                round(
+                    self.scheduler.config.num_train_timesteps
+                    - (denoising_end * self.scheduler.config.num_train_timesteps)
+                )
+            )
+            num_inference_steps = len(list(filter(lambda ts: ts >= discrete_timestep_cutoff, timesteps)))
+            timesteps = timesteps[:num_inference_steps]
 
         # 8. Denoising loop
         num_warmup_steps = len(timesteps) - num_inference_steps * self.scheduler.order
