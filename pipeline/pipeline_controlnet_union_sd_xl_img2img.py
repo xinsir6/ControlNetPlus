@@ -32,11 +32,14 @@ from diffusers.utils.import_utils import is_invisible_watermark_available
 
 from diffusers.image_processor import PipelineImageInput, VaeImageProcessor
 from diffusers.loaders import (
+    FromSingleFileMixin,
     IPAdapterMixin,
     StableDiffusionXLLoraLoaderMixin,
     TextualInversionLoaderMixin,
 )
-from diffusers.models import AutoencoderKL, ImageProjection, UNet2DConditionModel
+from diffusers.models.unets.unet_2d_condition import ImageProjection, UNet2DConditionModel
+from diffusers.models import AutoencoderKL, ControlNetModel
+from diffusers.pipelines.controlnet.multicontrolnet import MultiControlNetModel
 from models.controlnet_union import ControlNetModel_Union
 from diffusers.models.attention_processor import (
     AttnProcessor2_0,
@@ -163,6 +166,7 @@ class StableDiffusionXLControlNetUnionImg2ImgPipeline(
     TextualInversionLoaderMixin,
     StableDiffusionXLLoraLoaderMixin,
     IPAdapterMixin,
+    FromSingleFileMixin,
 ):
     r"""
     Pipeline for image-to-image generation using Stable Diffusion XL with ControlNet guidance.
@@ -236,7 +240,7 @@ class StableDiffusionXLControlNetUnionImg2ImgPipeline(
         tokenizer: CLIPTokenizer,
         tokenizer_2: CLIPTokenizer,
         unet: UNet2DConditionModel,
-        controlnet: Union[ControlNetModel, List[ControlNetModel], Tuple[ControlNetModel], MultiControlNetModel],
+        controlnet: ControlNetModel_Union | None,
         scheduler: KarrasDiffusionSchedulers,
         requires_aesthetics_score: bool = False,
         force_zeros_for_empty_prompt: bool = True,
@@ -1071,10 +1075,11 @@ class StableDiffusionXLControlNetUnionImg2ImgPipeline(
     @replace_example_docstring(EXAMPLE_DOC_STRING)
     def __call__(
         self,
+        union_control_type: torch.Tensor,
         prompt: Union[str, List[str]] = None,
         prompt_2: Optional[Union[str, List[str]]] = None,
         image: PipelineImageInput = None,
-        control_image_list: PipelineImageInput = None,
+        image_list: PipelineImageInput = None,
         height: Optional[int] = None,
         width: Optional[int] = None,
         strength: float = 0.8,
@@ -1110,8 +1115,7 @@ class StableDiffusionXLControlNetUnionImg2ImgPipeline(
         clip_skip: Optional[int] = None,
         callback_on_step_end: Optional[Callable[[int, int, Dict], None]] = None,
         callback_on_step_end_tensor_inputs: List[str] = ["latents"],
-        union_control = False,
-        union_control_type = None,
+        denoising_end: Optional[float] = None,
         **kwargs,
     ):
         r"""
@@ -1308,7 +1312,7 @@ class StableDiffusionXLControlNetUnionImg2ImgPipeline(
             )
 
         # 1. Check inputs. Raise error if not correct
-        for control_image in control_image_list:
+        for control_image in image_list:
             if control_image:
                 self.check_inputs(
                     prompt,
@@ -1393,10 +1397,10 @@ class StableDiffusionXLControlNetUnionImg2ImgPipeline(
         # 4. Prepare image and controlnet_conditioning_image
         image = self.image_processor.preprocess(image, height=height, width=width).to(dtype=torch.float32)
 
-        for idx in range(len(control_image_list)):
-            if control_image_list[idx]:
+        for idx in range(len(image_list)):
+            if image_list[idx]:
                 control_image = self.prepare_control_image(
-                    image=control_image_list[idx],
+                    image=image_list[idx],
                     width=width,
                     height=height,
                     batch_size=batch_size * num_images_per_prompt,
@@ -1407,7 +1411,7 @@ class StableDiffusionXLControlNetUnionImg2ImgPipeline(
                     guess_mode=guess_mode,
                 )
                 height, width = control_image.shape[-2:]
-                control_image_list[idx] = control_image
+                image_list[idx] = control_image
         
 
         # 5. Prepare timesteps
@@ -1482,6 +1486,22 @@ class StableDiffusionXLControlNetUnionImg2ImgPipeline(
         add_text_embeds = add_text_embeds.to(device)
         add_time_ids = add_time_ids.to(device)
 
+        # 8.1 Apply denoising_end
+        if (
+            denoising_end is not None
+            and isinstance(denoising_end, float)
+            and denoising_end > 0
+            and denoising_end < 1
+        ):
+            discrete_timestep_cutoff = int(
+                round(
+                    self.scheduler.config.num_train_timesteps
+                    - (denoising_end * self.scheduler.config.num_train_timesteps)
+                )
+            )
+            num_inference_steps = len(list(filter(lambda ts: ts >= discrete_timestep_cutoff, timesteps)))
+            timesteps = timesteps[:num_inference_steps]
+
         # 8. Denoising loop
         num_warmup_steps = len(timesteps) - num_inference_steps * self.scheduler.order
         with self.progress_bar(total=num_inference_steps) as progress_bar:
@@ -1520,7 +1540,7 @@ class StableDiffusionXLControlNetUnionImg2ImgPipeline(
                     control_model_input,
                     t,
                     encoder_hidden_states=controlnet_prompt_embeds,
-                    controlnet_cond_list=control_image_list,
+                    controlnet_cond_list=image_list,
                     conditioning_scale=cond_scale,
                     guess_mode=guess_mode,
                     added_cond_kwargs=controlnet_added_cond_kwargs,
