@@ -1,0 +1,1475 @@
+{
+  "last_node_id": 70,
+  "last_link_id": 176,
+  "nodes": [
+    {
+      "id": 17,
+      "type": "SetUnionControlNetType",
+      "pos": [
+        2009.061126185919,
+        30.931961802957673
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONTROL_NET",
+          "type": "CONTROL_NET",
+          "links": [
+            20
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SetUnionControlNetType"
+      },
+      "widgets_values": [
+        "repaint"
+      ]
+    },
+    {
+      "id": 62,
+      "type": "Note",
+      "pos": [
+        2252.0611261859185,
+        -95.06803819704236
+      ],
+      "size": {
+        "0": 210,
+        "1": 77.47145080566406
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "properties": {
+        "text": ""
+      },
+      "widgets_values": [
+        "Set the Unioncontrolnet type to repaint"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 66,
+      "type": "Note",
+      "pos": [
+        2615.755842485064,
+        941.3558491979742
+      ],
+      "size": {
+        "0": 386.2278137207031,
+        "1": 106.3429183959961
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "properties": {
+        "text": ""
+      },
+      "widgets_values": [
+        "ControlNet Union Promax will denoise the entire image and potentially alter it slightly. Therefore, we need to composite the original image back on top. You can then adjust the amount of blurring according to the input image resolution.\n"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 55,
+      "type": "PreviewImage",
+      "pos": [
+        2063.602618158597,
+        877.8968749244297
+      ],
+      "size": {
+        "0": 210,
+        "1": 246
+      },
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 150
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "color": "#1f2f51"
+    },
+    {
+      "id": 61,
+      "type": "Note",
+      "pos": [
+        1541.602618158596,
+        977.896874924429
+      ],
+      "size": {
+        "0": 377.2525634765625,
+        "1": 103.61337280273438
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "properties": {
+        "text": ""
+      },
+      "widgets_values": [
+        "Since Controlnet Union Promax only works when the inpaint or outpaint area is completely black, meaning it requires an RGB value of (0:0:0), this 3 node does this\n\n\n"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 64,
+      "type": "MaskBlur+",
+      "pos": [
+        2589.755842485064,
+        575.3558491979741
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 171
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            160
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskBlur+"
+      },
+      "widgets_values": [
+        6
+      ]
+    },
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [
+        2831.1071769785494,
+        -94.62777592388588
+      ],
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 7
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 100
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            9,
+            163
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "color": "#81456f"
+    },
+    {
+      "id": 63,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        3030.755842485064,
+        691.3558491979741
+      ],
+      "size": {
+        "0": 315,
+        "1": 146
+      },
+      "flags": {},
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 162
+        },
+        {
+          "name": "source",
+          "type": "IMAGE",
+          "link": 163
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 160
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            161
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageCompositeMasked"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ],
+      "color": "#1f2f51"
+    },
+    {
+      "id": 16,
+      "type": "ControlNetLoader",
+      "pos": [
+        1801.061126185919,
+        -85.06803819704234
+      ],
+      "size": {
+        "0": 389.4262390136719,
+        "1": 61.46521759033203
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "CONTROL_NET",
+          "type": "CONTROL_NET",
+          "links": [
+            19
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ControlNetLoader"
+      },
+      "widgets_values": [
+        "ContolnetPlus_promax.safetensors"
+      ],
+      "color": "#6b321f"
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1209.6174975589925,
+        173.4871721793724
+      ],
+      "size": {
+        "0": 425.27801513671875,
+        "1": 180.6060791015625
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            17
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Negetive",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "NSFW, watermask"
+      ],
+      "color": "#332922",
+      "bgcolor": "#593930"
+    },
+    {
+      "id": 3,
+      "type": "KSampler",
+      "pos": [
+        2634,
+        -13
+      ],
+      "size": {
+        "0": 315,
+        "1": 474
+      },
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 103
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 141
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 143
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 174
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            7
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        640566171705136,
+        "randomize",
+        25,
+        4.5,
+        "dpm_2",
+        "karras",
+        1
+      ],
+      "color": "#0e7158",
+      "bgcolor": "#2b2f38"
+    },
+    {
+      "id": 15,
+      "type": "ControlNetApplyAdvanced",
+      "pos": [
+        2142.0611261859203,
+        144.93196180295774
+      ],
+      "size": {
+        "0": 315,
+        "1": 166
+      },
+      "flags": {
+        "collapsed": false
+      },
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 16
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 17
+        },
+        {
+          "name": "control_net",
+          "type": "CONTROL_NET",
+          "link": 20,
+          "slot_index": 2
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 151
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            141
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            143
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ControlNetApplyAdvanced"
+      },
+      "widgets_values": [
+        0.75,
+        0,
+        1
+      ],
+      "color": "#25492a"
+    },
+    {
+      "id": 65,
+      "type": "SaveImage",
+      "pos": [
+        3424.2496588547983,
+        753.7341057302343
+      ],
+      "size": {
+        "0": 315,
+        "1": 270.0000305175781
+      },
+      "flags": {},
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 161
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "color": "#1f2f51"
+    },
+    {
+      "id": 9,
+      "type": "SaveImage",
+      "pos": [
+        3371,
+        -46
+      ],
+      "size": {
+        "0": 210,
+        "1": 270
+      },
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 9
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ],
+      "color": "#1f2f51"
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1210.6174975589925,
+        -52.512827820627706
+      ],
+      "size": {
+        "0": 422.84503173828125,
+        "1": 164.31304931640625
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            16
+          ],
+          "slot_index": 0
+        }
+      ],
+      "title": "Positive",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "sweater, Vibrant colors"
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 68,
+      "type": "MaskToImage",
+      "pos": [
+        793,
+        758
+      ],
+      "size": {
+        "0": 210,
+        "1": 26
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 167
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            168
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      }
+    },
+    {
+      "id": 50,
+      "type": "InvertMask",
+      "pos": [
+        1108,
+        807
+      ],
+      "size": {
+        "0": 210,
+        "1": 26
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 169,
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            122
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InvertMask"
+      }
+    },
+    {
+      "id": 48,
+      "type": "MaskToImage",
+      "pos": [
+        1186,
+        962
+      ],
+      "size": {
+        "0": 210,
+        "1": 26
+      },
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 122
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            148
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      }
+    },
+    {
+      "id": 69,
+      "type": "PreviewImage",
+      "pos": [
+        878,
+        872
+      ],
+      "size": {
+        "0": 210,
+        "1": 246
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 168
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 60,
+      "type": "Note",
+      "pos": [
+        271,
+        922
+      ],
+      "size": {
+        "0": 429.18359375,
+        "1": 141.23960876464844
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "properties": {
+        "text": ""
+      },
+      "widgets_values": [
+        "Open in mask editor, draw the area you want to inpaint,"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 54,
+      "type": "ImageCompositeMasked",
+      "pos": [
+        1537,
+        749
+      ],
+      "size": {
+        "0": 315,
+        "1": 146
+      },
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "destination",
+          "type": "IMAGE",
+          "link": 147
+        },
+        {
+          "name": "source",
+          "type": "IMAGE",
+          "link": 148
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 170
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            150,
+            151,
+            172
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageCompositeMasked"
+      },
+      "widgets_values": [
+        0,
+        0,
+        false
+      ],
+      "color": "#1f2f51"
+    },
+    {
+      "id": 40,
+      "type": "Reroute",
+      "pos": [
+        1799.8963491419802,
+        308.8669725779565
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 97
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "VAE",
+          "links": [
+            173
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 70,
+      "type": "VAEEncodeForInpaint",
+      "pos": [
+        2052,
+        529
+      ],
+      "size": {
+        "0": 315,
+        "1": 98
+      },
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 172
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 173
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 175
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            174
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncodeForInpaint"
+      },
+      "widgets_values": [
+        6
+      ]
+    },
+    {
+      "id": 43,
+      "type": "Reroute",
+      "pos": [
+        1403,
+        -213
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 101
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "MODEL",
+          "links": [
+            176
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 44,
+      "type": "Reroute",
+      "pos": [
+        2704,
+        -270
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 176
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "MODEL",
+          "links": [
+            103
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 11,
+      "type": "LoadImage",
+      "pos": [
+        210,
+        493
+      ],
+      "size": {
+        "0": 457.9482421875,
+        "1": 368.32391357421875
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            147,
+            162
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            167,
+            169,
+            170,
+            171,
+            175
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "clipspace/clipspace-mask-807497.6000000238.png [input]",
+        "image"
+      ],
+      "color": "#1f2f51"
+    },
+    {
+      "id": 41,
+      "type": "Reroute",
+      "pos": [
+        1376,
+        -246
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 98
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "VAE",
+          "links": [
+            99
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 42,
+      "type": "Reroute",
+      "pos": [
+        2739,
+        -320
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 99
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "VAE",
+          "links": [
+            100
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 4,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        596,
+        92
+      ],
+      "size": {
+        "0": 415.0768737792969,
+        "1": 112.2188491821289
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            101
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            3,
+            5
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            97,
+            98
+          ],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "PicLumen_HXL_Real_v2.safetensors"
+      ],
+      "color": "#6b321f"
+    }
+  ],
+  "links": [
+    [
+      3,
+      4,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      5,
+      4,
+      1,
+      7,
+      0,
+      "CLIP"
+    ],
+    [
+      7,
+      3,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      9,
+      8,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      16,
+      6,
+      0,
+      15,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      17,
+      7,
+      0,
+      15,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      19,
+      16,
+      0,
+      17,
+      0,
+      "CONTROL_NET"
+    ],
+    [
+      20,
+      17,
+      0,
+      15,
+      2,
+      "CONTROL_NET"
+    ],
+    [
+      97,
+      4,
+      2,
+      40,
+      0,
+      "*"
+    ],
+    [
+      98,
+      4,
+      2,
+      41,
+      0,
+      "*"
+    ],
+    [
+      99,
+      41,
+      0,
+      42,
+      0,
+      "*"
+    ],
+    [
+      100,
+      42,
+      0,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      101,
+      4,
+      0,
+      43,
+      0,
+      "*"
+    ],
+    [
+      103,
+      44,
+      0,
+      3,
+      0,
+      "MODEL"
+    ],
+    [
+      122,
+      50,
+      0,
+      48,
+      0,
+      "MASK"
+    ],
+    [
+      141,
+      15,
+      0,
+      3,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      143,
+      15,
+      1,
+      3,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      147,
+      11,
+      0,
+      54,
+      0,
+      "IMAGE"
+    ],
+    [
+      148,
+      48,
+      0,
+      54,
+      1,
+      "IMAGE"
+    ],
+    [
+      150,
+      54,
+      0,
+      55,
+      0,
+      "IMAGE"
+    ],
+    [
+      151,
+      54,
+      0,
+      15,
+      3,
+      "IMAGE"
+    ],
+    [
+      160,
+      64,
+      0,
+      63,
+      2,
+      "MASK"
+    ],
+    [
+      161,
+      63,
+      0,
+      65,
+      0,
+      "IMAGE"
+    ],
+    [
+      162,
+      11,
+      0,
+      63,
+      0,
+      "IMAGE"
+    ],
+    [
+      163,
+      8,
+      0,
+      63,
+      1,
+      "IMAGE"
+    ],
+    [
+      167,
+      11,
+      1,
+      68,
+      0,
+      "MASK"
+    ],
+    [
+      168,
+      68,
+      0,
+      69,
+      0,
+      "IMAGE"
+    ],
+    [
+      169,
+      11,
+      1,
+      50,
+      0,
+      "MASK"
+    ],
+    [
+      170,
+      11,
+      1,
+      54,
+      2,
+      "MASK"
+    ],
+    [
+      171,
+      11,
+      1,
+      64,
+      0,
+      "MASK"
+    ],
+    [
+      172,
+      54,
+      0,
+      70,
+      0,
+      "IMAGE"
+    ],
+    [
+      173,
+      40,
+      0,
+      70,
+      1,
+      "VAE"
+    ],
+    [
+      174,
+      70,
+      0,
+      3,
+      3,
+      "LATENT"
+    ],
+    [
+      175,
+      11,
+      1,
+      70,
+      2,
+      "MASK"
+    ],
+    [
+      176,
+      43,
+      0,
+      44,
+      0,
+      "*"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "Image Preparation",
+      "bounding": [
+        172,
+        416,
+        2378,
+        817
+      ],
+      "color": "#8AA",
+      "font_size": 24,
+      "locked": false
+    },
+    {
+      "title": "Pormax Controlnet inpainting",
+      "bounding": [
+        1764,
+        -167,
+        751,
+        554
+      ],
+      "color": "#b06634",
+      "font_size": 24,
+      "locked": false
+    },
+    {
+      "title": "Model And Prompts",
+      "bounding": [
+        568,
+        -159,
+        1158,
+        550
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "locked": false
+    },
+    {
+      "title": "Ksampler & Vae",
+      "bounding": [
+        2566,
+        -208,
+        1062,
+        691
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "locked": false
+    },
+    {
+      "title": "Composite Original image Back",
+      "bounding": [
+        2559,
+        480,
+        1255,
+        767
+      ],
+      "color": "#80d29c",
+      "font_size": 24,
+      "locked": false
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5209868481924645,
+      "offset": [
+        -201.68164080395798,
+        184.8199046372871
+      ]
+    },
+    "workspace_info": {
+      "id": "FRcgKMPykyTXnTgNsYHBO",
+      "saveLock": false,
+      "cloudID": null,
+      "coverMediaPath": null
+    }
+  },
+  "version": 0.4
+}
