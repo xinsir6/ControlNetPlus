@@ -1,4 +1,5 @@
 # diffusers测试ControlNet
+import time
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import sys
@@ -78,17 +79,19 @@ mask_gen_kwargs = {
 mask_gen = get_mask_generator(kind='mixed', kwargs=mask_gen_kwargs)
 
 
-prompt = "your prompt, the longer the better, you can describe it as detail as possible"
+prompt = "a cat and a dog playing football on the field, high quality, detailed painting, artstation"
 negative_prompt = 'longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality'
 
 
 seed = random.randint(0, 2147483647)
 
 # The original image you want to repaint.
-original_img = cv2.imread("your image path")
+original_img = cv2.imread("your image path 1")
+original_img_2 = cv2.imread("your image path 2")
+
 # # inpainting support any mask shape
 # # where you want to repaint, the mask image should be a binary image, with value 0 or 255.
-# mask = cv2.imread("your mask image path") 
+# mask = cv2.imread("your mask image path")
 
 height, width, _  = original_img.shape
 ratio = np.sqrt(1024. * 1024. / (width * height))
@@ -96,18 +99,33 @@ W, H = int(width * ratio) // 8 * 8, int(height * ratio) // 8 * 8
 original_img = cv2.resize(original_img, (W, H))
 original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
 
+original_img_2 = cv2.resize(original_img_2, (W, H))
+original_img_2 = cv2.cvtColor(original_img_2, cv2.COLOR_BGR2RGB)
+
 import copy
 controlnet_img = copy.deepcopy(original_img)
 controlnet_img = np.transpose(controlnet_img, (2, 0, 1))
+
+controlnet_img_2 = copy.deepcopy(original_img_2)
+controlnet_img_2 = np.transpose(controlnet_img_2, (2, 0, 1))
+
 mask = mask_gen(controlnet_img)
-controlnet_img = np.transpose(controlnet_img, (1, 2, 0))
 mask = np.transpose(mask, (1, 2, 0))
 
+controlnet_img = np.transpose(controlnet_img, (1, 2, 0))
+controlnet_img_2 = np.transpose(controlnet_img_2, (1, 2, 0))
+
 controlnet_img[mask.squeeze() > 0.0] = 0
+controlnet_img_2[mask.squeeze() > 0.0] = 0
+
 mask = HWC3((mask * 255).astype('uint8'))
 
 controlnet_img = Image.fromarray(controlnet_img)
+controlnet_img_2 = Image.fromarray(controlnet_img_2)
+
 original_img = Image.fromarray(original_img)
+original_img_2 = Image.fromarray(original_img_2)
+
 mask = Image.fromarray(mask)
 
 width, height = W, H
@@ -120,19 +138,53 @@ width, height = W, H
 # 5 -- segment
 # 6 -- tile
 # 7 -- repaint
-images = pipe(prompt=[prompt]*1,
+
+control_image_list = [
+    [0, 0, 0, 0, 0, 0, 0, controlnet_img],
+    [0, 0, 0, 0, 0, 0, 0, controlnet_img_2],
+]
+
+
+generator = torch.Generator('cuda').manual_seed(seed)
+start_time = time.time()
+images = pipe(
+            prompt=[prompt]*1,
             image=original_img,
             mask_image=mask,
             control_image_list=[0, 0, 0, 0, 0, 0, 0, controlnet_img], 
             negative_prompt=[negative_prompt]*1,
-            # generator=generator,
+            generator=generator,
             width=width, 
             height=height,
-            num_inference_steps=30,
+            num_inference_steps=12,
             union_control=True,
             union_control_type=torch.Tensor([0, 0, 0, 0, 0, 0, 0, 1]),
             ).images
+end_time = time.time()
+print(f"Single controlnet image inference time: {end_time - start_time} seconds")
+for i in range(len(images)):
+    images[i].save(f"output_single_control_{i}.png")
+    
+generator = torch.Generator('cuda').manual_seed(seed)
+start_time = time.time()
+images = pipe(
+            prompt=[prompt]*2,
+            image=[original_img, original_img_2],
+            mask_image=mask,
+            control_image_list=control_image_list, 
+            negative_prompt=[negative_prompt]*2,
+            generator=generator,
+            width=width, 
+            height=height,
+            num_inference_steps=12,
+            union_control=True,
+            union_control_type=torch.Tensor([0, 0, 0, 0, 0, 0, 0, 1]),
+            guidance_scale=12.0,
+            ).images
+end_time = time.time()
+print(f"Batch processing ControlNet Union inference time: {end_time - start_time} seconds")
 
-controlnet_img.save("control_inpainting.webp")
-images[0].save(f"your image save path, png format is usually better than jpg or webp in terms of image quality but got much bigger")
+for i in range(len(images)):
+    images[i].save(f"output_{i}.png")
+
 
